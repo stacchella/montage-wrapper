@@ -2148,6 +2148,8 @@ def mSubset(images_table, template_header, subset_table, debug_level=None,
     command += " " + str(images_table)
     command += " " + str(template_header)
     command += " " + str(subset_table)
+    print(command)
+    print(shlex.split(command))
     p = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE,
         stderr=subprocess.PIPE)
     stderr = p.stderr.read()

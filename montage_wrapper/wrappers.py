@@ -534,10 +534,11 @@ def mosaic(input_dir, output_dir, header=None, image_table=None, mpi=False,
         m.mMakeHdr(images_raw_all_tbl, header_hdr)
         images_raw_tbl = images_raw_all_tbl
     else:
-        log.info("Checking for coverage")
-        s = m.mSubset(images_raw_all_tbl, header_hdr, images_raw_tbl, fast_mode=subset_fast)
-        if s.nmatches == 0:
-            raise MontageError("No images overlap with the requested header")
+        log.info("Not checking for coverage... do it yourself.")
+        images_raw_tbl = images_raw_all_tbl
+        #s = m.mSubset(images_raw_all_tbl, header_hdr, images_raw_tbl, fast_mode=subset_fast)
+        #if s.nmatches == 0:
+        #    raise MontageError("No images overlap with the requested header")
 
     # Projecting raw frames
     log.info("Projecting raw frames")
