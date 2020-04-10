@@ -370,7 +370,7 @@ def mosaic(input_dir, output_dir, header=None, image_table=None, mpi=False,
            n_proc=8, background_match=False, imglist=None, combine="mean",
            exact_size=False, cleanup=True, bitpix=-32, level_only=True,
            work_dir=None, background_n_iter=None, subset_fast=False,
-           hdu=None):
+           scale_pix=None, hdu=None):
     """
     Combine FITS files into a mosaic
 
@@ -438,6 +438,10 @@ def mosaic(input_dir, output_dir, header=None, image_table=None, mpi=False,
 
     subset_fast : bool, optional
         Whether to use the fast mode for mSubset
+
+    scale_pix : float, optional
+        Processing is done utilizing the drizzle algorithm. scale_pix is a
+        floating point number; recommended drizzle factors are from 0.5 to 1.
 
     hdu: int, optional
         Which HDU to use when mosaicing
@@ -550,7 +554,8 @@ def mosaic(input_dir, output_dir, header=None, image_table=None, mpi=False,
         table_filtered.write(images_raw_tbl, format='ascii.ipac')
 
     m.mProjExec(images_raw_tbl, header_hdr, projected_dir, stats_tbl,
-                raw_dir=raw_dir, mpi=mpi, n_proc=n_proc, exact=exact_size)
+                raw_dir=raw_dir, mpi=mpi, n_proc=n_proc, exact=exact_size,
+                scale_pix=scale_pix)
 
     # List projected frames
     s = m.mImgtbl(projected_dir, images_projected_tbl)

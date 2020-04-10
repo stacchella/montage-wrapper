@@ -1743,7 +1743,7 @@ def mProjectPP(in_image, out_image, template_header, factor=None,
 def mProjExec(images_table, template_header, proj_dir, stats_table,
           raw_dir=None, debug=False, exact=False, whole=False, border=None,
           restart_rec=None, status_file=None, scale_column=None, mpi=False,
-          n_proc=8):
+          scale_pix=None, n_proc=8):
     '''
     An executive which runs mProject (or, if possible for the input/output
     projections, mProjectPP) for each image in an image metadata table.
@@ -1801,6 +1801,10 @@ def mProjExec(images_table, template_header, proj_dir, stats_table,
         If set to True, will use the MPI-enabled versions of the Montage
         executable.
 
+    scale_pix : float, optional
+        Processing is done utilizing the drizzle algorithm. scale_pix is a
+        floating point number; recommended drizzle factors are from 0.5 to 1.
+
     n_proc : int, optional
         If mpi is set to True, n_proc is the number of processes to run
         simultaneously (default is 8)
@@ -1825,6 +1829,8 @@ def mProjExec(images_table, template_header, proj_dir, stats_table,
         command += " -s %s" % str(status_file)
     if scale_column:
         command += " -x %s" % str(scale_column)
+    if scale_pix:
+        command += " -z %s" % str(scale_pix)
     command += " " + str(images_table)
     command += " " + str(template_header)
     command += " " + str(proj_dir)
