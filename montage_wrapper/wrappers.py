@@ -528,7 +528,9 @@ def mosaic(input_dir, output_dir, header=None, image_table=None, mpi=False,
     # List frames to mosaic
     if image_table is None:
         log.info("Listing raw frames")
-        m.mImgtbl(raw_dir, images_raw_all_tbl, img_list=imglist, corners=True)
+        # m.mImgtbl(raw_dir, images_raw_all_tbl, img_list=imglist, corners=True)
+        cmd = "/cm/shared/apps/montage/bin/mImgtbl -c " + raw_dir + " " + images_raw_all_tbl
+        os.system(cmd)
     else:
         sh.copy2(image_table, images_raw_all_tbl)
 
